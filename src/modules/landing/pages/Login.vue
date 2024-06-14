@@ -26,7 +26,7 @@
     <div class="max-h-auto mx-auto max-w-xl">
       <!-- Login title and description -->
       <div class="mb-8 space-y-3">
-      <router-view to="/directions"><p class="text-xl font-semibold text-center">Login</p> </router-view> 
+      <router-view to="/direction"><p class="text-xl font-semibold text-center">Login</p> </router-view> 
         <p class="text-gray-500">Ingrese su teléfono y le enviaremos un código a su bandeja de entrada. <br />No hay necesidad de contraseñas, ¡como por arte de magia!</p>
       </div>
       <!-- Login form -->
@@ -36,11 +36,11 @@
             <div class="space-y-2">
               <!-- Email label and input field -->
               <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="phone_number">Número de Telefono</label>
-              <input class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="email" placeholder="número de telefono" name="email" />
+              <input class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="phone_number" placeholder="número de telefono"/>
             </div>
           </div>
           <!-- Login button -->
-          <button class="ring-offset-background focus-visible:ring-ring flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-black/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" type="submit">Iniciar Sesion</button>
+        <router-view to="/location"><button class="ring-offset-background focus-visible:ring-ring flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-black/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Iniciar Sesion</button></router-view>  
         </div>
       </form>
       <!-- Signup link -->

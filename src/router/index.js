@@ -1,36 +1,50 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import LandingPage from "@/modules/landing/pages/LandingPage.vue";
-import Login from "@/modules/landing/pages/Login.vue";
-import DirectionsView from "@/modules/landing/pages/DirectionsView.vue";
-import FormDriver from "@/modules/landing/pages/FormDriver.vue";
-
-
-
+import HomePage from "@/modules/landing/pages/HomePage.vue";
 
 export const router = createRouter({
     history: createWebHashHistory( import.meta.env.BASE_URL ),
     routes: [
         {
         path:'/',
-        name:'landing',
-        component:LandingPage
+        name:'home',
+        component:HomePage
     },
     {
         path:'/login',
         name:'login',
-        component: Login,
+        component: () => import('@/modules/landing/pages/Login.vue'),
     
     },
     {
+        path:'/menu',
+        name:'menu',
+        component: () => import('@/modules/landing/pages/MenuView.vue'),
+    
+    },
+{
+    path:'/location',
+    name:'location',
+    component:()=> import ('@/modules/landing/pages/LocationView.vue')
+
+},
+
+{
+    path: '/map',
+    name: 'map',
+    component: () => import ('@/modules/landing/pages/MapView.vue')
+  
+},
+
+    {
         path:'/formDriver',
         name:'formDriver',
-        component: FormDriver,
+        component: () => import ('@/modules/landing/pages/FormDriver.vue'),
     
     },
     {
         path:'/directions',
         name:'directions',
-        component: DirectionsView,
+        component: () => import ('@/modules/landing/pages/DirectionsView.vue'),
     
     },
 
