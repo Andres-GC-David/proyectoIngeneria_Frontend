@@ -54,6 +54,13 @@ export const router = createRouter({
     
     },
 
+    {
+        path:'/searchingDriver',
+        name:'searchingDriver',
+        component: () => import ('@/modules/landing/pages/SearchingDriverView.vue'),
+    
+    },
+
 
     ]
 })

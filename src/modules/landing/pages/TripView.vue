@@ -19,6 +19,13 @@
                     <p class="font-medium text-lg">Punto de Llegada</p>
                     <p>{{ destinationCoords }}</p>
                 </div>
+                <div class="mt-6">
+                    <button
+                        @click="handleConfirm"
+                        class="inline-flex justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none">
+                        Confirmar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -26,13 +33,19 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useTripStore } from '@/stores/trip';
 
 const tripStore = useTripStore();
+const router = useRouter();
 const passengerName = ref('');
 const destinationName = ref('');
 const originCoords = ref('');
 const destinationCoords = ref('');
+
+const handleConfirm = () => {
+    router.push({ name: 'searchingDriver' });
+};
 
 onMounted(() => {
     console.log('Datos del viaje en la tienda en TripView:', tripStore);
@@ -43,5 +56,3 @@ onMounted(() => {
     destinationCoords.value = `${tripStore.destination.lat}, ${tripStore.destination.lng}`;
 });
 </script>
-
-
