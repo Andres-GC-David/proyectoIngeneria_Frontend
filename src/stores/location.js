@@ -1,9 +1,9 @@
-import { ref, computed, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 const getUserLocation = async () => {
-    return new Promise((res, rej) => {
-        navigator.geolocation.getCurrentPosition(res, rej)
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
     })
 }
 
@@ -25,10 +25,14 @@ export const useLocationStore = defineStore('location', () => {
     })
 
     const updateCurrentLocation = async () => {
-        const userLocation = await getUserLocation()
-        current.geometry = {
-            lat: userLocation.coords.latitude,
-            lng: userLocation.coords.longitude
+        try {
+            const userLocation = await getUserLocation()
+            current.geometry = {
+                lat: userLocation.coords.latitude,
+                lng: userLocation.coords.longitude
+            }
+        } catch (error) {
+            console.error('Error al obtener la ubicación actual:', error)
         }
     }
 
@@ -41,6 +45,6 @@ export const useLocationStore = defineStore('location', () => {
         current.geometry.lat = null
         current.geometry.lng = null
     }
-    
+
     return { destination, current, updateCurrentLocation, reset }
 })

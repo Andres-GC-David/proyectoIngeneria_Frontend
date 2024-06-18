@@ -24,13 +24,13 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import { useLocationStore } from '@/stores/location'
 import { useTripStore } from '@/stores/trip'
-import http from '@/helpers/http'
-import axios from 'axios';
-import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { ref, onMounted } from 'vue'
 
 const location = useLocationStore()
 const trip = useTripStore()
@@ -38,57 +38,81 @@ const router = useRouter()
 
 const gMap = ref(null)
 
-const handleConfirmTrip = () => {
-    http().post('/api/trip', {
-        origin: location.current.geometry,
-        destination: location.destination.geometry,
-        destination_name: location.destination.name
-    })
-        .then((response) => {
-            trip.$patch(response.data)
-            router.push({
-                name: 'trip'
-            })
-        })
-        .catch((error) => {
-            console.error(error)
-        })
+const handleConfirmTrip = async () => {
+    try {
+        const response = await axios.post('http://localhost:8000/api/viaje', {
+            idRuta: 1,  // Debe obtener el ID de la ruta de alguna manera
+            idEstadoConfirmacion: 1,  // Asumiendo un estado de confirmación por defecto
+            puntoDeLlegada: `${location.destination.geometry.lat},${location.destination.geometry.lng}`,
+            puntoDePartida: `${location.current.geometry.lat},${location.current.geometry.lng}`
+        });
+
+        console.log('Viaje creado:', response.data);
+
+        // Verifica que la respuesta contenga el viaje esperado
+        if (response.data && response.data.idViaje) {
+            const viaje = response.data;
+
+            // Actualiza la tienda de viajes con los datos del viaje
+            trip.$patch({
+                id: viaje.idViaje,
+                origin: {
+                    lat: location.current.geometry.lat,
+                    lng: location.current.geometry.lng
+                },
+                destination: {
+                    lat: location.destination.geometry.lat,
+                    lng: location.destination.geometry.lng
+                },
+                destination_name: location.destination.name,
+                passenger_name: 'Nombre del Pasajero'  // Reemplazar con el nombre real del pasajero
+            });
+
+            // Verificar los datos almacenados en la tienda
+            console.log('Datos del viaje en la tienda:', trip);
+
+            // Redirigir a la página del viaje o mostrar una confirmación
+            router.push({ name: 'trip' });
+        } else {
+            console.error('Error en la respuesta del viaje:', response.data);
+            alert('Error en la respuesta del viaje.');
+        }
+    } catch (error) {
+        console.error('Error al crear el viaje:', error.response ? error.response.data : error.message);
+    }
 }
 
 onMounted(async () => {
-    // does the user have a location set?
+    // Verifica si el usuario tiene una ubicación establecida
     if (location.destination.name === '') {
-        router.push({
-            name: 'location'
-        })
+        router.push({ name: 'location' });
     }
 
-    // lets get the users current location
-    await location.updateCurrentLocation()
+    // Obtener la ubicación actual del usuario
+    await location.updateCurrentLocation();
 
-    // draw a path on the map
-    gMap.value.$mapPromise.then((mapObject) => {
+    // Dibujar una ruta en el mapa
+    if (gMap.value) {
+        gMap.value.$mapPromise.then((mapObject) => {
+            let currentPoint = new google.maps.LatLng(location.current.geometry.lat, location.current.geometry.lng),
+                destinationPoint = new google.maps.LatLng(location.destination.geometry.lat, location.destination.geometry.lng),
+                directionsService = new google.maps.DirectionsService,
+                directionsDisplay = new google.maps.DirectionsRenderer({ map: mapObject });
 
-        let currentPoint = new google.maps.LatLng(location.current.geometry),
-            destinationPoint = new google.maps.LatLng(location.destination.geometry),
-            directionsService = new google.maps.DirectionsService,
-            directionsDisplay = new google.maps.DirectionsRenderer({
-                map: mapObject
-            })
-
-        directionsService.route({
-            origin: currentPoint,
-            destination: destinationPoint,
-            avoidTolls: false,
-            avoidHighways: false,
-            travelMode: google.maps.TravelMode.DRIVING
-        }, (res, status) => {
-            if (status === google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(res)
-            } else {
-                console.error(status)
-            }
-        })
-    })
-})
+            directionsService.route({
+                origin: currentPoint,
+                destination: destinationPoint,
+                avoidTolls: false,
+                avoidHighways: false,
+                travelMode: google.maps.TravelMode.DRIVING
+            }, (res, status) => {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(res);
+                } else {
+                    console.error('Directions request returned no results:', status);
+                }
+            });
+        });
+    }
+});
 </script>

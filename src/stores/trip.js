@@ -1,9 +1,10 @@
-import { ref, computed, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useTripStore = defineStore('trip', () => {
     const id = ref(null)
     const user_id = ref(null)
+    const passenger_name = ref('')
 
     const origin = reactive({
         lat: null,
@@ -36,28 +37,23 @@ export const useTripStore = defineStore('trip', () => {
     const reset = () => {
         id.value = null
         user_id.value = null
-
+        passenger_name.value = ''
         origin.lat = null
         origin.lng = null
-
         destination.lat = null
         destination.lng = null
-
         driver_location.lat = null
         driver_location.lng = null
-
         destination_name.value = ''
-
         driver.id = null
         driver.year = null
         driver.make = null
         driver.model = null
         driver.license_plate = null
         driver.user.name = null
-
         is_started.value = false
         is_complete.value = false
     }
 
-    return { id, user_id, origin, destination, driver_location, destination_name, is_started, is_complete, reset }
+    return { id, user_id, passenger_name, origin, destination, driver_location, destination_name, is_started, is_complete, reset }
 })

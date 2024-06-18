@@ -38,7 +38,7 @@ export const router = createRouter({
     {
         path:'/formDriver',
         name:'formDriver',
-        component: () => import ('@/modules/landing/pages/FormDriver.vue'),
+        component: () => import ('@/modules/landing/pages/FormClient.vue'),
     
     },
     {
@@ -47,6 +47,13 @@ export const router = createRouter({
         component: () => import ('@/modules/landing/pages/DirectionsView.vue'),
     
     },
+    {
+        path:'/trip',
+        name:'trip',
+        component: () => import ('@/modules/landing/pages/TripView.vue'),
+    
+    },
+
 
     ]
 })
