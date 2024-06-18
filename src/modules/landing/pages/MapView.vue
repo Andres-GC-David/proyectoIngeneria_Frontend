@@ -65,19 +65,20 @@ const handleConfirmTrip = async () => {
 
             // Actualiza la tienda de viajes con los datos del viaje
             trip.$patch({
-                id: viaje.idViaje,
-                user_id: userId, // Guardar el user_id en la tienda de viajes
-                origin: {
-                    lat: location.current.geometry.lat,
-                    lng: location.current.geometry.lng
-                },
-                destination: {
-                    lat: location.destination.geometry.lat,
-                    lng: location.destination.geometry.lng
-                },
-                destination_name: location.destination.name,
-                passenger_name: 'Nombre del Pasajero'  // Reemplazar con el nombre real del pasajero
-            });
+    id: viaje.idViaje,
+    user_id: userId,
+    origin: {
+        lat: location.current.geometry.lat,
+        lng: location.current.geometry.lng
+    },
+    destination: {
+        lat: location.destination.geometry.lat,
+        lng: location.destination.geometry.lng
+    },
+    destination_name: location.destination.name,
+    passenger_name: localStorage.getItem('lastUserName')  // Recuperar el nombre del pasajero desde localStorage
+});
+
 
             // Verificar los datos almacenados en la tienda
             console.log('Datos del viaje en la tienda:', trip);
