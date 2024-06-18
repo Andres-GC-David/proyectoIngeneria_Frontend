@@ -26,25 +26,35 @@
 </template>
 
 <script setup>
-import { useLocationStore } from '@/stores/location'
-import { useTripStore } from '@/stores/trip'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { useLocationStore } from '@/stores/location';
+import { useTripStore } from '@/stores/trip';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
 
-const location = useLocationStore()
-const trip = useTripStore()
-const router = useRouter()
+const location = useLocationStore();
+const trip = useTripStore();
+const router = useRouter();
+const gMap = ref(null);
 
-const gMap = ref(null)
+// Obtener el idCliente desde localStorage o algún lugar seguro
+const idCliente = localStorage.getItem('idCliente');
+const userId = localStorage.getItem('user_id'); // Recuperar el user_id
 
 const handleConfirmTrip = async () => {
+    if (!idCliente) {
+        alert('No se encontró el ID del cliente. Asegúrate de haber iniciado sesión.');
+        return;
+    }
+
     try {
-        const response = await axios.post('http://localhost:8000/api/viaje', {
+        const response = await axios.post('http://localhost:8000/api/viajes', {
             idRuta: 1,  // Debe obtener el ID de la ruta de alguna manera
             idEstadoConfirmacion: 1,  // Asumiendo un estado de confirmación por defecto
             puntoDeLlegada: `${location.destination.geometry.lat},${location.destination.geometry.lng}`,
-            puntoDePartida: `${location.current.geometry.lat},${location.current.geometry.lng}`
+            puntoDePartida: `${location.current.geometry.lat},${location.current.geometry.lng}`,
+            idCliente: idCliente,  // Añadir el idCliente aquí
+            user_id: userId // Añadir el user_id aquí
         });
 
         console.log('Viaje creado:', response.data);
@@ -56,6 +66,7 @@ const handleConfirmTrip = async () => {
             // Actualiza la tienda de viajes con los datos del viaje
             trip.$patch({
                 id: viaje.idViaje,
+                user_id: userId, // Guardar el user_id en la tienda de viajes
                 origin: {
                     lat: location.current.geometry.lat,
                     lng: location.current.geometry.lng
@@ -78,7 +89,12 @@ const handleConfirmTrip = async () => {
             alert('Error en la respuesta del viaje.');
         }
     } catch (error) {
-        console.error('Error al crear el viaje:', error.response ? error.response.data : error.message);
+        if (error.response && error.response.data) {
+            console.error('Error al crear el viaje:', error.response.data);
+            alert(`Error al crear el viaje: ${JSON.stringify(error.response.data.errors)}`);
+        } else {
+            console.error('Error al crear el viaje:', error.message);
+        }
     }
 }
 
