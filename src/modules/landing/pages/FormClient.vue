@@ -80,53 +80,63 @@ export default {
   },
   methods: {
     async submitForm() {
-      try {
-        // Crear el usuario primero
-        const userResponse = await axios.post('http://localhost:8000/api/usuario', {
-          nombre: this.nombre,
-          apellido: this.apellido,
-          idTipoUsuario: this.idTipoUsuario
-        });
-
-        console.log('Usuario creado:', userResponse.data);
-
-        if (userResponse.data && userResponse.data.idUsuario) {
-          const idUsuario = userResponse.data.idUsuario;
-
-          if (this.idTipoUsuario == 1) {
-            // Crear el cliente usando el idUsuario
-            const clientResponse = await axios.post('http://localhost:8000/api/cliente', {
-              fechaDeNacimiento: this.fechaDeNacimiento,
-              idUsuario: idUsuario
+        try {
+            // Crear el usuario primero
+            const userResponse = await axios.post('http://localhost:8000/api/usuario', {
+                nombre: this.nombre,
+                apellido: this.apellido,
+                idTipoUsuario: this.idTipoUsuario
             });
-            console.log('Cliente creado:', clientResponse.data);
-          } else if (this.idTipoUsuario == 2) {
-            // Crear el chofer usando el idUsuario
-            const driverResponse = await axios.post('http://localhost:8000/api/chofer', {
-              idUsuario: idUsuario,
-              idVehiculo: this.idVehiculo
-            });
-            console.log('Chofer creado:', driverResponse.data);
-          }
 
-          // Guardar el nombre del usuario en localStorage
-          localStorage.setItem('lastUserName', `${this.nombre} ${this.apellido}`);
-          // Redirigir al menú
-          this.router.push('/menu');
-        } else {
-          console.error('Error en la creación del usuario:', userResponse.data);
-          alert('Hubo un error al crear el usuario');
+            console.log('Usuario creado:', userResponse.data);
+
+            if (userResponse.data && userResponse.data.idUsuario) {
+                const idUsuario = userResponse.data.idUsuario;
+
+                if (this.idTipoUsuario == 1) {
+                    // Crear el cliente usando el idUsuario
+                    const clientResponse = await axios.post('http://localhost:8000/api/cliente', {
+                        fechaDeNacimiento: this.fechaDeNacimiento,
+                        idUsuario: idUsuario
+                    });
+                    console.log('Cliente creado:', clientResponse.data);
+
+                    // Almacenar el idCliente en localStorage
+                    if (clientResponse.data && clientResponse.data.idCliente) {
+                        localStorage.setItem('idCliente', clientResponse.data.idCliente);
+                    }
+                } else if (this.idTipoUsuario == 2) {
+                    // Crear el chofer usando el idUsuario
+                    const driverResponse = await axios.post('http://localhost:8000/api/chofer', {
+                        idUsuario: idUsuario,
+                        idVehiculo: this.idVehiculo
+                    });
+                    console.log('Chofer creado:', driverResponse.data);
+
+                    // Almacenar el idCliente en localStorage (si es necesario)
+                    if (driverResponse.data && driverResponse.data.idCliente) {
+                        localStorage.setItem('idCliente', driverResponse.data.idCliente);
+                    }
+                }
+
+                // Guardar el nombre del usuario en localStorage
+                localStorage.setItem('lastUserName', `${this.nombre} ${this.apellido}`);
+                // En FormClient.vue después de crear el cliente o chofer
+                localStorage.setItem('user_id', userResponse.data.idUsuario);
+
+                // Redirigir al menú
+                this.router.push('/menu');
+            } else {
+                console.error('Error en la creación del usuario:', userResponse.data);
+                alert('Hubo un error al crear el usuario');
+            }
+
+        } catch (error) {
+            console.error('Error:', error.response ? error.response.data : error.message);
+            alert('Hubo un error al crear el usuario');
         }
-
-      } catch (error) {
-        console.error('Error:', error.response ? error.response.data : error.message);
-        alert('Hubo un error al crear el usuario');
-      }
     }
-  }
+}
+
 }
 </script>
-
-<style>
-/* Tus estilos aquí */
-</style>
