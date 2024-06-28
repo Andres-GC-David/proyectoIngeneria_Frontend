@@ -8,11 +8,12 @@
         <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
           <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
             <div class="text-gray-600">
-              <p class="font-medium text-lg">Detalles del Conductor</p>
+              <p class="font-medium text-lg">Detalles del Usuario</p>
               <p>Por favor llene todos los campos</p>
             </div>
 
-            <div class="lg:col-span-2">
+         
+           <div class="lg:col-span-2">
               <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                 <div class="md:col-span-5">
                   <label for="first_name">Nombre</label>
@@ -47,7 +48,7 @@
 
                 <div class="md:col-span-5 text-right">
                   <div class="inline-flex items-end">
-                    <button @click="submitForm" class="bg-zinc-950 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded">Login</button>
+                    <button @click="submitForm" class="bg-zinc-950 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded">Registrarse</button>
                   </div>
                 </div>
 

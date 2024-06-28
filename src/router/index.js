@@ -21,6 +21,12 @@ export const router = createRouter({
         component: () => import('@/modules/landing/pages/MenuView.vue'),
     
     },
+    {
+        path:'/menuDriver',
+        name:'menuDriver',
+        component: () => import('@/modules/landing/pages/menuDriver.vue'),
+    
+    },
 {
     path:'/location',
     name:'location',
@@ -38,6 +44,13 @@ export const router = createRouter({
     {
         path:'/formDriver',
         name:'formDriver',
+        component: () => import ('@/modules/landing/pages/FormDriver.vue'),
+    
+    },
+
+    {
+        path:'/formClient',
+        name:'formClient',
         component: () => import ('@/modules/landing/pages/FormClient.vue'),
     
     },
@@ -58,6 +71,12 @@ export const router = createRouter({
         path:'/searchingDriver',
         name:'searchingDriver',
         component: () => import ('@/modules/landing/pages/SearchingDriverView.vue'),
+    
+    },
+    {
+        path:'/searchingClient',
+        name:'searchingClient',
+        component: () => import ('@/modules/landing/pages/SearchingClientView.vue'),
     
     },
 

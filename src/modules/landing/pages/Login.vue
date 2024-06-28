@@ -44,7 +44,7 @@
         </div>
       </form>
       <!-- Signup link -->
-      <router-link to="/formDriver">  <div class="text-center"> Aun no tienes cuenta? <a class="text-blue-500" href="/signup">Registrase</a> </div> </router-link>
+      <router-link to="/formClient">  <div class="text-center"> Aun no tienes cuenta? <a class="text-blue-500" href="/signup">Registrase</a> </div> </router-link>
     </div>
   </div>
 </div>

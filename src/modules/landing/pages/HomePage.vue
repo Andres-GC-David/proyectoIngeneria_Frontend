@@ -5,7 +5,6 @@
 <header class="text-white body-font border-b border-gray-200 bg-zinc-900">
   <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center bg-zinc-900">
     <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0" href="https://tailblocks.cc" target="_blank">
-      <img class="w-12 h-12 p-2 rounded-full"  src="../../../assets/Uber_Logo_White_RGB.png">
 
 
       <span class="ml-3 text-xl">Uver</span>
@@ -30,13 +29,13 @@
       <p class="mb-8 leading-relaxed">Genera ganancias en tu propio tiempo con entregas, viajes o ambos. Puedes usar tu propio auto u optar por un vehículo de renta a través de la app de Uber.</p>
       <div class="flex justify-center">
         <router-link to="/login"> <button class="inline-flex text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Iniciar Sesion</button> </router-link>
-        <router-link to="/formDriver"> <button class="ml-4 inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg">Registrarse</button> </router-link>
+        <router-link to="/formClient"> <button class="ml-4 inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg">Registrarse</button> </router-link>
 
 
       </div>
     </div>
     <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img class="object-cover object-center rounded" alt="hero" src="../../../assets/Uber_Logo_White_RGB.png">
+      <img class="object-cover object-center rounded" alt="hero" src="../../../assets/giphy.gif">
     </div>
   </div>
 </section>
@@ -71,8 +70,8 @@
       <div class="flex md:flex-no-wrap flex-wrap justify-center md:justify-start">
         <input class="sm:w-64 w-40 bg-zinc-200 rounded sm:mr-4 mr-2 border border-gray-400 focus:outline-none focus:border-gray-500 text-base py-2 px-4" placeholder="Report a problem" type="text">
         <button class="inline-flex text-white bg-gray-600 border-0 py-2 px-6 focus:outline-none hover:bg-gray-800 rounded">Send</button>
-        <p class="text-gray-500 text-sm md:ml-6 md:mt-0 mt-2 sm:text-left text-center">Bitters chicharrones fanny pack
-          <br class="lg:block hidden">waistcoat green juice
+        <p class="text-gray-500 text-sm md:ml-6 md:mt-0 mt-2 sm:text-left text-center"> debajo del palo de mango
+          <br class="lg:block hidden">turip ip
         </p>
       </div>
      
